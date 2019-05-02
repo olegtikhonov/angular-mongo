@@ -8,7 +8,7 @@ exports.create = (req, res) => {
           message: "Todo task can not be empty"
       });
   }
-  // Create a Todo
+  // Creates a Todo task
   const todo = new Todo({
       id: req.body.id,
       name: req.body.name,
