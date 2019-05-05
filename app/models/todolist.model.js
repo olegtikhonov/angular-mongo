@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-//https://mongoosejs.com/docs/schematypes.html
 const TodoListSchema = mongoose.Schema({
     id: Number,
     name: String,
@@ -10,4 +9,4 @@ const TodoListSchema = mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('Todo', TodoListSchema);
+module.exports = mongoose.model('TodoList', TodoListSchema);
