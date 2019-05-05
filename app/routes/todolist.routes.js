@@ -9,6 +9,10 @@ module.exports = (app) => {
     app.get('/todos/:id', todos.findOne);
     // Retrieves by name
     app.get('/todos/names/:name', todos.findByName);
+    // Retrieves by task state
+    app.get('/todos/states/:complete', todos.findByState);
+    // Calculates how many documents by state completed or not
+    app.get('/todos/counters/:complete', todos.countByState);
     // Updates a Todo task with id
     app.put('/todos/:id', todos.update);
     // Deletes a Todo task with id

@@ -35,7 +35,7 @@ function logMessage(req) {
 exports.findByName = (req, res) => {
     //conditions, projection, options, callback
     const todoName = req.params.name;
-    TodoTask.find({name: todoName}, logMessage(req)).then(todoItem => {
+    TodoTask.find({name: todoName}, logMessage(req)).count().then(todoItem => {
         if (!todoItem) {
             return res.status(404).send({
                 message: "Todo task not found with name " + todoName
@@ -53,6 +53,41 @@ exports.findByName = (req, res) => {
         });
     });
 };
+
+exports.findByState = (req, res) => {
+    let todoState = req.params.complete;
+    console.info("Desired state complete:" + todoState)
+    TodoTask.find({complete:todoState}, logMessage(req)).then(todoItem => {
+        if (!todoItem) {
+            return res.status(404).send({
+                message: "Todo task not found with state " + todoState
+            });
+        }
+        res.send(todoItem);
+    }).catch(err => {
+        if (err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Todo task not found with state " + todoState
+            });
+        }
+        return res.status(500).send({
+            message: "Error retrieving todo task with state " + todoState
+        });
+    });
+}
+
+exports.countByState = (req, res) => {
+    let todoState = req.params.complete;
+    console.info("Counts for state:" + todoState)
+    TodoTask.countDocuments({complete: todoState}, logMessage(req)).exec((err, count) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+
+        res.json({count: count});
+    });
+}
 
 exports.findAll = (req, res) => {
     TodoTask.find(req.params.name)
