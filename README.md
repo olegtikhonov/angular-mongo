@@ -72,3 +72,8 @@ Get a count of documents by state
 ```
 curl -H "Content-Type: application/json" localhost:4201/todos/counters/false
 ```
+
+Show connected clients in mongodb container
+```
+db.currentOp(true).inprog.forEach(function(d){if (d.client)printjson(d.client)})
+```
