@@ -9,7 +9,7 @@ exports.create = (req, res) => {
         });
     }
     // Creates a Todo task
-    var todo = new TodoTask({
+    let todo = new TodoTask({
         id: req.body.id,
         name: req.body.name,
         complete: req.body.complete
@@ -31,11 +31,11 @@ function logMessage(req) {
     console.log(req.url);
 }
 
-// Loks up a task list associated with user name
+// Looks up a task list associated with user name
 exports.findByName = (req, res) => {
     //conditions, projection, options, callback
     const todoName = req.params.name;
-    TodoTask.find({name: todoName}, logMessage(req)).count().then(todoItem => {
+    TodoTask.find({name: todoName}, logMessage(req)).countDocuments().then(todoItem => {
         if (!todoItem) {
             return res.status(404).send({
                 message: "Todo task not found with name " + todoName
